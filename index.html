@@ -10,16 +10,66 @@
 
     <h1 class="headline">ETCH-A-SKETCH</h1>
 
-    <div class="container">
-    
+    <div class="container"> 
 
     </div>
-    <button class="change-size">change size</button>
+    <button class="change-size" onclick="resizeSquares()">change size / clear</button>
 
     <script>
 
-    
+    const container = document.querySelector(".container")
+    let defaultsize = 32;
+    makegrid(defaultsize);
+ 
+    function makegrid(res) {
+     for (let i = 0; i < res; i++) {
+    const row = document.createElement("div");
+    row.classList.add("row");
+    container.appendChild(row);
+    for (let i = 0; i < res; i++) {
+      const column = document.createElement("div");
+      column.classList.add("column");
+      row.appendChild(column);
+    }
+  }
+}
+function resizeSquares() {
+  input = +prompt("Number of squares per side (max 64)");
+  if (input && typeof input === "number" && input <= 64) {
+    defaultsize = input;
+    clearSquares();
+  } else {
+    alert("Insert a valid number");
+  }
+}
 
+function clearSquares() {
+  container.innerHTML = "";
+  makegrid(defaultsize);
+}
+    
+function changeSquareColor(e){
+    e.target.style.backgroundColor = "grey";
+}
+ 
+container.addEventListener("mousedown", (e) => {
+  drawing = true;
+  changeSquareColor(e);
+});
+container.addEventListener("mouseover", (e) => {
+  if (!drawing) return;
+  changeSquareColor(e);
+});
+container.addEventListener("mouseup", () => {
+  drawing = false;
+});
+
+
+usersize.addEventListener("click", () => {
+        return userinput();
+    });
+
+makegrid();
     </script>   
 </body>
 </html>
